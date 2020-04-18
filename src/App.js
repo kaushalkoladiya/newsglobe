@@ -16,7 +16,7 @@ class App extends React.Component {
   componentDidMount() {
     let link = 'https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=08d1b3a92a4543b398d786fd8bdad5fc';
     link = 'https://newsapi.org/v2/top-headlines?country=in&apiKey=08d1b3a92a4543b398d786fd8bdad5fc';
-    fetch(url)
+    fetch(link)
       .then(response => {
         return response.json();
       })
