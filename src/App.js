@@ -39,7 +39,7 @@ class App extends React.Component {
       return
     }
     this.setState({ isLoading: true });
-    const url = `http://newsapi.org/v2/everything?pageSize=50&sources=${value}&apiKey=08d1b3a92a4543b398d786fd8bdad5fc`;
+    const url = `https://newsapi.org/v2/everything?pageSize=50&sources=${value}&apiKey=08d1b3a92a4543b398d786fd8bdad5fc`;
     const articles = await fetchArticles(url);
     this.setState({ articles: articles, isLoading: false });
   }
@@ -49,7 +49,7 @@ class App extends React.Component {
       return
     }
     this.setState({ isLoading: true });
-    const url = `http://newsapi.org/v2/top-headlines?pageSize=50&category=${value}&apiKey=08d1b3a92a4543b398d786fd8bdad5fc`
+    const url = `https://newsapi.org/v2/top-headlines?pageSize=50&category=${value}&apiKey=08d1b3a92a4543b398d786fd8bdad5fc`
     const articles = await fetchArticles(url);
     this.setState({ articles: articles, isLoading: false });
   }
@@ -59,7 +59,7 @@ class App extends React.Component {
       return
     }
     this.setState({ isLoading: true });
-    const url = `http://newsapi.org/v2/top-headlines?pageSize=50&country=${value}&apiKey=08d1b3a92a4543b398d786fd8bdad5fc`;
+    const url = `https://newsapi.org/v2/top-headlines?pageSize=50&country=${value}&apiKey=08d1b3a92a4543b398d786fd8bdad5fc`;
     const articles = await fetchArticles(url);
     this.setState({ articles: articles, isLoading: false });
   }
