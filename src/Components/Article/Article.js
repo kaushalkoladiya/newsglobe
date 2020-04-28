@@ -9,7 +9,7 @@ const article = (props) => {
         <div className="col-md-4">
           <img 
             src={props.article.urlToImage}
-            alt="no"
+            alt="not found"
             className="w-100 h-auto img img-fluid"
             />
         </div>
