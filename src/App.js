@@ -4,7 +4,7 @@ import { withRouter, Route, Switch } from "react-router-dom";
 import { fetchArticles } from "./api";
 
 import NavBar from "./Components/NavBar/NavBar";
-// import Footer from './Components/Footer';
+import Footer from "./Components/Footer/Footer";
 import HomePage from "./containers/Home";
 import DashboardPage from "./containers/Dashboard";
 
@@ -103,15 +103,7 @@ class App extends React.Component {
 
         {route}
 
-        {/* {this.state.isLoading ? (
-          <center>
-            <div className="spinner-grow m-5" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          </center>
-        ) : (this.state.articles.map((item, index) => (<Article article={item} />)))
-        } */}
-        {/* <Footer /> */}
+        <Footer />
       </div>
     );
   }

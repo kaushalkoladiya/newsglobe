@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const fetchSource = async () => {
   const sourceURL =
-    "https://newsapi.org/v2/sources?language=en&pageSize=100&apiKey=08d1b3a92a4543b398d786fd8bdad5fc";
+    "https://newsapi.org/v2/sources?language=en&pageSize=100&apiKey=2d5e7e1eeac04b1c8a64086b34f96446";
   try {
     const {
       data: { sources },
