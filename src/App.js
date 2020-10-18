@@ -14,15 +14,14 @@ const App = (pros) => {
   const [term, setTerm] = useState("");
 
   useEffect(() => {
-    const link =
-      "https://newsapi.org/v2/top-headlines?country=in&apiKey=2d5e7e1eeac04b1c8a64086b34f96446";
-    setLoading(true);
-    fetch(link)
-      .then((res) => res.json())
-      .then((data) => {
-        setArticals(data.articles);
-        setLoading(false);
-      });
+    (async () => {
+      const link =
+        "https://newsapi.org/v2/top-headlines?country=in&apiKey=2d5e7e1eeac04b1c8a64086b34f96446";
+      setLoading(true);
+      const articles = await fetchArticles(link);
+      setArticals(articles);
+      setLoading(false);
+    })();
   }, []);
 
   const onSourceChangeHandler = async (value) => {
