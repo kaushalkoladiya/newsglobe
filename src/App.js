@@ -1,5 +1,5 @@
-import React from "react";
-import { withRouter, Route, Switch } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 
 import { fetchArticles } from "./api";
 
@@ -8,105 +8,92 @@ import Footer from "./Components/Footer/Footer";
 import HomePage from "./containers/Home";
 import DashboardPage from "./containers/Dashboard";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      articles: [],
-      isLoading: false,
-      term: "",
-    };
-  }
+const App = (pros) => {
+  const [articles, setArticals] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [term, setTerm] = useState("");
 
-  componentDidMount() {
+  useEffect(() => {
     const link =
       "https://newsapi.org/v2/top-headlines?country=in&apiKey=2d5e7e1eeac04b1c8a64086b34f96446";
-    this.setState({ isLoading: true });
+    setLoading(true);
     fetch(link)
-      .then((response) => {
-        return response.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
-        this.setState({
-          articles: data.articles,
-          isLoading: false,
-        });
+        setArticals(data.articles);
+        setLoading(false);
       });
-  }
+  }, []);
 
-  onSourceChangeHandler = async (value) => {
+  const onSourceChangeHandler = async (value) => {
     if (!value) {
       return;
     }
-    this.setState({ isLoading: true });
+    setLoading(true);
     const url = `https://newsapi.org/v2/everything?pageSize=50&sources=${value}&apiKey=2d5e7e1eeac04b1c8a64086b34f96446`;
     const articles = await fetchArticles(url);
-    this.setState({ articles: articles, isLoading: false });
+    setArticals(articles);
+    setLoading(false);
   };
 
-  onCategoryChangeHandler = async (value) => {
+  const onCategoryChangeHandler = async (value) => {
     if (!value) {
       return;
     }
-    this.setState({ isLoading: true });
+    setLoading(true);
     const url = `https://newsapi.org/v2/top-headlines?pageSize=50&category=${value}&apiKey=2d5e7e1eeac04b1c8a64086b34f96446`;
     const articles = await fetchArticles(url);
-    this.setState({ articles: articles, isLoading: false });
+    setArticals(articles);
+    setLoading(false);
   };
 
-  onCountryChangeHandler = async (value) => {
+  const onCountryChangeHandler = async (value) => {
     if (!value) {
       return;
     }
-    this.setState({ isLoading: true });
+    setLoading(true);
     const url = `https://newsapi.org/v2/top-headlines?pageSize=50&country=${value}&apiKey=2d5e7e1eeac04b1c8a64086b34f96446`;
     const articles = await fetchArticles(url);
-    this.setState({ articles: articles, isLoading: false });
+    setArticals(articles);
+    setLoading(false);
   };
 
-  inputChangeHandler = (value) => {
-    this.setState({ term: value });
+  const inputChangeHandler = (value) => {
+    setTerm(value);
   };
 
-  onSearchHandler = async () => {
-    this.setState({ isLoading: true });
-    const url = `https://newsapi.org/v2/everything?q=${this.state.term}&pageSize=50&apiKey=2d5e7e1eeac04b1c8a64086b34f96446`;
+  const onSearchHandler = async () => {
+    setLoading(true);
+    const url = `https://newsapi.org/v2/everything?q=${term}&pageSize=50&apiKey=2d5e7e1eeac04b1c8a64086b34f96446`;
     const articles = await fetchArticles(url);
-    this.setState({ articles: articles, isLoading: false });
+    setArticals(articles);
+    setLoading(false);
   };
 
-  render() {
-    let route = (
-      <Switch>
-        <Route
-          path="/"
-          exact
-          render={() => (
-            <HomePage
-              articles={this.state.articles}
-              isLoading={this.state.isLoading}
-            />
-          )}
-        />
-        <Route path="/dashboard" exact render={() => <DashboardPage />} />
-      </Switch>
-    );
-    return (
+  return (
+    <BrowserRouter>
       <div className="conatainer">
         <NavBar
-          onSourceChangeHandler={this.onSourceChangeHandler}
-          onCategoryChangeHandler={this.onCategoryChangeHandler}
-          onCountryChangeHandler={this.onCountryChangeHandler}
-          onSearchHandler={this.onSearchHandler}
-          inputChangeHandler={this.inputChangeHandler}
+          onSourceChangeHandler={onSourceChangeHandler}
+          onCategoryChangeHandler={onCategoryChangeHandler}
+          onCountryChangeHandler={onCountryChangeHandler}
+          onSearchHandler={onSearchHandler}
+          inputChangeHandler={inputChangeHandler}
         />
 
-        {route}
+        <Switch>
+          <Route
+            path="/"
+            exact
+            render={() => <HomePage articles={articles} isLoading={loading} />}
+          />
+          <Route path="/dashboard" exact render={() => <DashboardPage />} />
+        </Switch>
 
         <Footer />
       </div>
-    );
-  }
-}
+    </BrowserRouter>
+  );
+};
 
-export default withRouter(App);
+export default App;
